@@ -1,21 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Question from './Question';
 import { QuizContext } from '../state/QuizContextProvider';
 
-export default function Quiz({onFinished}) {
+export default function Quiz() {
     const quizCtx = useContext(QuizContext);
-    const [currentQuestion, setCurrentQuestion] = useState(0);
 
-    let question;
-    if (quizCtx.questions.length <= currentQuestion) {
-        onFinished();
-    } else {
-        question = quizCtx.questions[currentQuestion];
+    let question = quizCtx.questions[quizCtx.currentQuestionIndex];
+
+    function goToTheNextQuestion(questionId, answerId) {
+        quizCtx.addAnswer(questionId, answerId);
+        quizCtx.goToTheNextQuestion();
     }
 
     return (
         <div id="quiz">
-            <Question question={question} />
+            {question && <Question question={question} onProcessed={goToTheNextQuestion} />}
         </div>
     )
 }

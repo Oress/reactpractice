@@ -1,22 +1,22 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import Header from "./components/Header";
 import Quiz from "./components/Quiz";
 import Summary from "./components/Summary";
 import QuizContextProvider from "./state/QuizContextProvider";
+import {QuizContext} from "./state/QuizContextProvider";
 
 function App() {
-    const [quizFinished, setQuizFinished] = useState(false);
+    const quizCtx = useContext(QuizContext);
 
     return (
-        <QuizContextProvider>
+        <>
             <Header />
             {
-                quizFinished
+                quizCtx.quizFinished
                 ? <Summary />
-                : <Quiz onFinished={() => setQuizFinished(true)}/>
+                : <Quiz/>
             }
-
-        </QuizContextProvider>
+        </>
     )
 }
 
