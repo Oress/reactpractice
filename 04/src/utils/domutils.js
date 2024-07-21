@@ -1,5 +1,5 @@
 
 
-export function getModalElement() {
+export function getModalRoot() {
     return document.querySelector('#modal');
 }
