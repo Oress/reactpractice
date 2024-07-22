@@ -3,9 +3,12 @@ import { createContext, useReducer } from "react";
 
 const defaultValue = {
     cart: [],
+    customer: {},
+    fillCustomerData: () => {},
     addToCart: () => {},
     removeFromCart: () => {},
     getCartTotal: () => {},
+    cleanCart: () => {}
 };
 export const CartContext = createContext(defaultValue);
 
@@ -15,7 +18,6 @@ export const CartContextProvider = ({children}) => {
         switch (action.type) {
             case 'ADD':
                 const itemToAdd = state.cart.find((itemPosition) => itemPosition.item.id === action.payload.id);
-                console.log('itemToAdd', itemToAdd);
                 if (itemToAdd) {
                     return {
                         ...state,
@@ -58,6 +60,16 @@ export const CartContextProvider = ({children}) => {
                         })
                     };
                 }
+            case 'CLEAN':
+                return {
+                    ...state,
+                    cart: []
+                };
+            case 'FILL_CUSTOMER':
+                return {
+                    ...state,
+                    customer: action.payload
+                };
             default:
                 return state;
         }
@@ -65,9 +77,11 @@ export const CartContextProvider = ({children}) => {
 
     const initialState = {
         cart: [],
+        fillCustomerData: (item) => cartReducer({type: 'FILL_CUSTOMER', payload: item}),
         addToCart: (item) => cartReducer({type: 'ADD', payload: item}),
         removeFromCart: (item) => cartReducer({type: 'REMOVE', payload: item}),
-        getCartTotal: () => cartReducer({type: 'TOTAL'})
+        getCartTotal: () => cartReducer({type: 'TOTAL'}),
+        cleanCart: () => cartReducer({type: 'CLEAN'})
     };
 
     const [state, cartReducer] = useReducer(cartReducerFn, initialState);

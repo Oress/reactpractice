@@ -1,12 +1,15 @@
 
 
 
-export default function Input({label="Label", id="id",  ...props }) {
-    const classes = type === 'text' ? 'text-button' : 'button';
+export default function Input({label="Label", id="id", errors=[], value='',  ...props }) {
     return (
         <div className='control'>
-            <label for={id}>{label}</label>
-            <input id={id} type="text" />
+            <label htmlFor={id}>{label}</label>
+            <input id={id} type="text" {...props} />
+            <div className="errors">
+                {errors.map((error, index) => <p key={index}>{error}</p>)}
+            </div>
+            
         </div>
     );
 }

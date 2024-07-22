@@ -4,6 +4,10 @@ class HttpService {
     getMeals() {
         return fetch(BASE_URL + '/meals');
     }
+
+    saveOrder(payload) {
+        return fetch(BASE_URL + '/orders', { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' }});
+    }
 }
 
 export function getImageUrl(imgLocation) {

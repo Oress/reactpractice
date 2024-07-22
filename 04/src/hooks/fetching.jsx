@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function useHttpRequest(requestfn) {
+export default function useHttpRequest(requestfn, payload) {
     const [isFetching, setIsFetching] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        requestfn().then(async (response) => {
+        requestfn(payload).then(async (response) => {
             const json = await response.json();
             setIsFetching(false);
             setData(json);
