@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { getModalRoot } from '../utils/domutils';
 
-export function ModalWrapper ({children, buttons=<></>}) {
+export function ModalWrapper ({children, dialogClosed, buttons=<></>}) {
     const dialogRef = useRef();
 
     useEffect(() => {
@@ -10,7 +10,7 @@ export function ModalWrapper ({children, buttons=<></>}) {
     }, [])
 
     return createPortal(
-        <dialog ref={dialogRef} className="modal">
+        <dialog ref={dialogRef} onClose={dialogClosed} className="modal">
             {children}
             <div className="modal-actions">
                 {buttons}

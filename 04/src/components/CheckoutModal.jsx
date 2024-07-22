@@ -4,13 +4,13 @@ import { ModalWrapper } from './ModalWrapper';
 import { CartContext } from '../context/CartContext';
 
 
-export default function CartDetailsModal({ onClose, onProceed }) {
+export default function CheckoutModal({ onClose, onProceed }) {
     const ctx = useContext(CartContext);
     const items = ctx.cart.sort((a, b) => a.item.id - b.item.id);
+    const total = items.reduce((acc, item) => acc + item.item.price * item.quantity, 0);
 
-    const total = items.reduce((acc, item) => {
-        return acc + item.item.price * item.quantity;
-    }, 0);
+
+
 
     const isEmptyCart = items.length === 0;
 
@@ -32,17 +32,14 @@ export default function CartDetailsModal({ onClose, onProceed }) {
         </>
     }>
         <div className="cart">
-            <h2>Your Cart</h2>
-            {
-                isEmptyCart ? <p>Your cart is empty</p>
-                    : <>
-                        <ul>
-                            {itemsElements}
-                        </ul>
-                        <span className="cart-total">${total}</span>
-                    </>
-            }
-
+            <h2>Checkout</h2>
+            <Input label="Full Name" id="name" />
+            <Input label="E-Mail Address" id="email" />
+            <Input label="Street" id="street" />
+            <div className="cart-items">
+                <Input label="Postal Code" id="zip" />
+                <Input label="City" id="city" />
+            </div>
         </div>
     </ModalWrapper>
 
